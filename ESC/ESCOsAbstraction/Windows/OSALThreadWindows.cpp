@@ -19,15 +19,13 @@ DWORD __stdcall OSAL::OSALThread::handler(LPVOID param)
         {
             if (WaitForSingleObject(th->_handleIntervallEvent, th->_intervall) == WAIT_TIMEOUT)
             {
-                th->_callback->callback(th->_callbackParam);
+                th->_callback->threadCallback(th->_callbackParam);
             }
             else
             {
                 return 0;
             }
         }
-
-       
     }
     
     return 0;

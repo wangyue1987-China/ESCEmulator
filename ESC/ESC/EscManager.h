@@ -15,13 +15,15 @@ namespace ESC
 		OSAL::OSALThread _thread;
 		OSAL::OSALAdapter _adapter;
 
-		virtual int32_t callback(void* param);
+		virtual int32_t threadCallback(void* param);
 		
 	public:
 		EscManager(const OSAL::OSALAdapter& adapter);
+		EscManager();
 		~EscManager();
 		void addEsc(Esc* escInstance);
 		void removeEsc(Esc* escInstance);
+		void ProcessFrame(EthercatFrame& ethframe);
 		int32_t start();
 		int32_t stop();
 	};

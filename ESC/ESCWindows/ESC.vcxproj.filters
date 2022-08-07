@@ -24,9 +24,6 @@
     <ClCompile Include="..\ESC\escFMMU.cpp">
       <Filter>ESC</Filter>
     </ClCompile>
-    <ClCompile Include="..\ESC\EscMain.cpp">
-      <Filter>ESC</Filter>
-    </ClCompile>
     <ClCompile Include="..\ESC\EscMemory.cpp">
       <Filter>ESC</Filter>
     </ClCompile>
@@ -78,6 +75,7 @@
     <ClCompile Include="..\ESCOsAbstraction\Windows\OSALCriticalSectionWindows.cpp">
       <Filter>OS\Windows</Filter>
     </ClCompile>
+    <ClCompile Include="EscMain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\ESC\ESC.h">

@@ -2,10 +2,12 @@
 #include "OSALAdapterBase.h"
 namespace OSAL
 {
-	class OSALAdapter :OSALAdapterBase
+	class OSALAdapter :public OSALAdapterBase
 	{
 	public:
 		OSALAdapter(const std::string& name);
+		OSALAdapter();
+		
 
 		static std::vector<std::string> GetAdapters();
 		virtual int32_t AdapterOpen();

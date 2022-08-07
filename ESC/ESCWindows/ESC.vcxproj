@@ -34,13 +34,13 @@
     <ClCompile Include="..\ESC\EscData.cpp" />
     <ClCompile Include="..\ESC\EscEEPROM.cpp" />
     <ClCompile Include="..\ESC\escFMMU.cpp" />
-    <ClCompile Include="..\ESC\EscMain.cpp" />
     <ClCompile Include="..\ESC\EscManager.cpp" />
     <ClCompile Include="..\ESC\EscMemory.cpp" />
     <ClCompile Include="..\ESC\EscSM.cpp" />
     <ClCompile Include="..\ESC\EthercatFrame.cpp" />
     <ClCompile Include="..\ESC\EthercatPDU.cpp" />
     <ClCompile Include="..\ESC\EthercatPDUData.cpp" />
+    <ClCompile Include="EscMain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\ESCOsAbstraction\OSAL.h" />

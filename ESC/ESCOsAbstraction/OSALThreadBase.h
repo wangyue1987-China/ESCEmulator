@@ -14,7 +14,7 @@ namespace OSAL
 	class OSALThreadCallback
 	{
 	public:
-		virtual int32_t callback(void* param) = 0;
+		virtual int32_t threadCallback(void* param) = 0;
 	};
 
 	class OSALThreadBase

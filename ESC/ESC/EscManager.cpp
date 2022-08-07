@@ -7,6 +7,13 @@ ESC::EscManager::EscManager(const OSAL::OSALAdapter& adapter)
 {
 }
 
+ESC::EscManager::EscManager()
+	:_esclist(EscList())
+	, _thread(1, this, nullptr, 0)
+	, _adapter(OSAL::OSALAdapter())
+{
+}
+
 ESC::EscManager::~EscManager()
 {
 }
@@ -35,9 +42,22 @@ void ESC::EscManager::removeEsc(Esc* escInstance)
 	}*/
 }
 
-int32_t ESC::EscManager::callback(void* param)
+void ESC::EscManager::ProcessFrame(EthercatFrame& ethframe)
+{
+	if ((ethframe.size() > 0) && (ethframe.size() != 0xFFFF))
+	{
+		for (Esc* aesc : _esclist)
+		{
+			aesc->processFrames(ethframe);
+		}
+		_adapter.adapterWrite(ethframe);
+	}
+}
+
+int32_t ESC::EscManager::threadCallback(void* param)
 {
 	EthercatFrame ethframe;
+	if(_adapter.valid())
 	_adapter.adapterRead(ethframe);
 	if ((ethframe.size() > 0) && (ethframe.size() != 0xFFFF))
 	{

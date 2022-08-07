@@ -52,6 +52,12 @@ OSAL::OSALAdapter::OSALAdapter(const std::string& name)
 {
 }
 
+OSAL::OSALAdapter::OSALAdapter()
+    : OSALAdapterBase()
+{
+
+}
+
 int32_t OSAL::OSALAdapter::AdapterOpen()
 {
     return int32_t();
