@@ -41,6 +41,7 @@
     <ClCompile Include="..\ESC\EthercatPDU.cpp" />
     <ClCompile Include="..\ESC\EthercatPDUData.cpp" />
     <ClCompile Include="EscMain.cpp" />
+    <ClCompile Include="ESIFile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\ESCOsAbstraction\OSAL.h" />
@@ -68,6 +69,7 @@
     <ClInclude Include="..\ESC\EthercatFrame.h" />
     <ClInclude Include="..\ESC\EthercatPDU.h" />
     <ClInclude Include="..\ESC\EthercatPDUData.h" />
+    <ClInclude Include="ESIFile.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

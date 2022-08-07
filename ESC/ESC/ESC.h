@@ -11,7 +11,7 @@ namespace ESC
 	class Esc
 	{
 	public:
-		Esc(const std::string& name);
+		Esc(const std::string& name, const std::string& configFilePath);
 		~Esc();
 		int32_t start();
 		void stop();
@@ -29,9 +29,9 @@ namespace ESC
 		EscMemory _memory;
 		std::string _name;
 		EscEEPROM _eeprom;
-		
+		std::string _configFilePath;
 
-		
+		void setup();
 		void processPDUs(EthercatPDU& pdu);
 		void cmdNOP(EthercatPDU& pdu);
 		//Auto Increment Read

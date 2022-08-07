@@ -29,6 +29,11 @@ int32_t ESC::EscManager::stop()
 	return int32_t();
 }
 
+void ESC::EscManager::addEsc(const std::string EsiFilePath)
+{
+	
+}
+
 void ESC::EscManager::addEsc(Esc* escInstance)
 {
 	_esclist.push_back(escInstance);

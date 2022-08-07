@@ -10,6 +10,9 @@
     <Filter Include="OS\Windows">
       <UniqueIdentifier>{0486c29c-56db-41cb-8621-1298f0369dbf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ESC\ESCTools">
+      <UniqueIdentifier>{25d9d8cb-e92c-4d77-a58c-2bb0614849c5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\ESC\ESC.cpp">
@@ -76,6 +79,9 @@
       <Filter>OS\Windows</Filter>
     </ClCompile>
     <ClCompile Include="EscMain.cpp" />
+    <ClCompile Include="ESIFile.cpp">
+      <Filter>ESC\ESCTools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\ESC\ESC.h">
@@ -152,6 +158,9 @@
     </ClInclude>
     <ClInclude Include="..\ESCOsAbstraction\Windows\OSALCriticalSectionWindows.h">
       <Filter>OS\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="ESIFile.h">
+      <Filter>ESC\ESCTools</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -2,13 +2,14 @@
 #include "EthercatPDU.h"
 using namespace ESC;
 
-ESC::Esc::Esc(const std::string& name)
+ESC::Esc::Esc(const std::string& name, const std::string& configFilePath)
 	: _memory()
 	, _name(name)
-	, _eeprom(name, _memory, 1024)
+	, _eeprom()
+	, _configFilePath(configFilePath)
 	
 {
-	_memory.writeEscRegister16(0x130,0x0100);
+	
 }
 
 ESC::Esc::~Esc()
@@ -43,6 +44,11 @@ bool ESC::Esc::operator==(const Esc& rhs)
 void ESC::Esc::process()
 {
 	_eeprom.process();
+}
+
+void ESC::Esc::setup()
+{
+	_memory.writeEscRegister16(0x130, 0x0100);
 }
 
 void Esc::processPDUs(EthercatPDU& pdu)

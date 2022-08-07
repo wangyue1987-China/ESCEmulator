@@ -1,7 +1,7 @@
 #include "EscEEPROM.h"
 #include <string.h>
 
-ESC::EscEEPROM::EscEEPROM(const std::string& name, const ESC::EscMemory& memory, ESC::escSize_t size)
+ESC::EscEEPROM::EscEEPROM(const std::string& name, const ESC::EscMemory& memory, ESC::escSize_t size, const std::string& eepromBinPath)
 	:_eePromMemory(0)
 	, _registerEEPROMConfiguration(0)//Ethercat controls the Interface
 	, _registerEEPROMPDIAccessState(0)//Ethercat controls the Interface
@@ -11,10 +11,11 @@ ESC::EscEEPROM::EscEEPROM(const std::string& name, const ESC::EscMemory& memory,
 	,_memory(memory)
 	,_size(size)
 	, _name(name)
-	, _file("/home/pi/LEDStatusBarEEprom.bin")
+	, _binFilePath(eepromBinPath)
 	, _valid(true)
 	, _lastCommand(0xFF)
 	, _statemachine(0)
+	
 {
 	_eePromMemory = (uint16_t*)malloc(_size);
 	if (_eePromMemory == nullptr)
@@ -30,13 +31,13 @@ ESC::EscEEPROM::EscEEPROM(const std::string& name, const ESC::EscMemory& memory,
 		_valid = false;
 		return;
 	}
-	if (!_file.readFile((void*)_eePromMemory, _size))
+	if (!OSAL::OSALFile(_binFilePath).readFile((void*)_eePromMemory, _size))
 	{
 		fprintf(stdout, "ESC::EscEEPROM::EscEEPROM : readFile failed\n");
-		_valid = false;
 		return;
 	}
 }
+
 ESC::EscEEPROM::EscEEPROM(const EscEEPROM& rhs)
 	:_eePromMemory(rhs._eePromMemory)
 	, _registerEEPROMConfiguration(rhs._registerEEPROMConfiguration)//Ethercat controls the Interface
@@ -47,17 +48,35 @@ ESC::EscEEPROM::EscEEPROM(const EscEEPROM& rhs)
 	, _memory(rhs._memory)
 	, _size(rhs._size)
 	, _name(rhs._name)
-	, _file("/home/pi/LEDStatusBarEEprom.bin")
+	, _binFilePath(rhs._binFilePath)
 	, _valid(rhs._valid)
 	, _lastCommand(rhs._lastCommand)
 	, _statemachine(rhs._statemachine)
+	
 {
 
 }
 
+ESC::EscEEPROM::EscEEPROM()
+	:_eePromMemory(nullptr)
+	, _registerEEPROMConfiguration()//Ethercat controls the Interface
+	, _registerEEPROMPDIAccessState()//Ethercat controls the Interface
+	, _registerEEPROMControlStatus()
+	, _registerEepromAddress()
+	, _registerEepromData()
+	, _memory()
+	, _size()
+	, _name()
+	, _binFilePath(std::string(""))
+	, _valid(false)
+	, _lastCommand()
+	, _statemachine()
+{
+}
+
 ESC::EscEEPROM::~EscEEPROM()
 {
-	_file.writeFile(_eePromMemory, _size);
+	OSAL::OSALFile(_binFilePath).writeFile(_eePromMemory, _size);
 	if (_valid)
 	{
 		free(_eePromMemory);
@@ -123,6 +142,11 @@ void ESC::EscEEPROM::process()
 	}
 
 	}
+}
+
+int32_t ESC::EscEEPROM::writeEEpromContent(uint16_t* data, ESC::escSize_t size)
+{
+	return int32_t();
 }
 
 void ESC::EscEEPROM::readFromEeprom(EscRegisterAddress_t adr, ESC::escSize_t size,uint8_t* data)

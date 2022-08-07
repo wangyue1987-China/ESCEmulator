@@ -58,20 +58,23 @@ namespace ESC
 		ESC::EscMemory _memory;
 		ESC::escSize_t _size;
 		std::string _name;
-		OSAL::OSALFile _file;
+		std::string _binFilePath;
 		bool _valid;
 		uint8_t _lastCommand;
 		int32_t _statemachine;
+		//OSAL::OSALFile _file;
 
 		void readFromEeprom(EscRegisterAddress_t adr, ESC::escSize_t size, uint8_t* data);
 		void writeToEeprom(EscRegisterAddress_t adr, uint16_t data);
 
 
 	public:
-		EscEEPROM(const std::string& name,const ESC::EscMemory& memory, ESC::escSize_t size);
+		EscEEPROM(const std::string& name,const ESC::EscMemory& memory, ESC::escSize_t size, const std::string& eepromBinPath);
 		EscEEPROM(const EscEEPROM& rhs);
+		EscEEPROM();
 		~EscEEPROM();
 		void process();
+		int32_t writeEEpromContent(uint16_t* data, ESC::escSize_t size);
 
 	};
 }

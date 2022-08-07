@@ -5,7 +5,7 @@
 #include "OSALAdapter.h"
 int main()
 {
-	ESC::Esc esc1("Slave1");
+	ESC::Esc esc1("Slave1","hjhj");
 	//ESC::Esc esc2("Slave2");
 	//ESC::Esc esc3("Slave3");
 

@@ -21,6 +21,7 @@ namespace ESC
 		EscManager(const OSAL::OSALAdapter& adapter);
 		EscManager();
 		~EscManager();
+		void addEsc(const std::string EsiFilePath);
 		void addEsc(Esc* escInstance);
 		void removeEsc(Esc* escInstance);
 		void ProcessFrame(EthercatFrame& ethframe);
