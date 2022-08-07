@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="OS">
+      <UniqueIdentifier>{4746899a-492b-49dc-aefd-e64fee2df724}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ESC">
+      <UniqueIdentifier>{e255e34d-d731-45c3-b51b-da60ada6b728}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OS\Windows">
+      <UniqueIdentifier>{0486c29c-56db-41cb-8621-1298f0369dbf}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\ESC\ESC.cpp">
+      <Filter>ESC</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ESC\EscData.cpp">
+      <Filter>ESC</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ESC\EscEEPROM.cpp">
+      <Filter>ESC</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ESC\escFMMU.cpp">
+      <Filter>ESC</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ESC\EscMain.cpp">
+      <Filter>ESC</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ESC\EscMemory.cpp">
+      <Filter>ESC</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ESC\EscSM.cpp">
+      <Filter>ESC</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ESC\EthercatFrame.cpp">
+      <Filter>ESC</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ESC\EthercatPDU.cpp">
+      <Filter>ESC</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ESC\EthercatPDUData.cpp">
+      <Filter>ESC</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ESCOsAbstraction\OSAL.cpp">
+      <Filter>OS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ESCOsAbstraction\OSALAdapterBase.cpp">
+      <Filter>OS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ESCOsAbstraction\OSALCriticalSectionBase.cpp">
+      <Filter>OS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ESCOsAbstraction\OSALFile.cpp">
+      <Filter>OS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ESCOsAbstraction\OSALFileBase.cpp">
+      <Filter>OS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ESCOsAbstraction\OSALThread.cpp">
+      <Filter>OS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ESCOsAbstraction\OSALThreadBase.cpp">
+      <Filter>OS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ESC\EscManager.cpp">
+      <Filter>ESC</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ESCOsAbstraction\Windows\OSALAdapterWindows.cpp">
+      <Filter>OS\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ESCOsAbstraction\Windows\OSALThreadWindows.cpp">
+      <Filter>OS\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ESCOsAbstraction\Windows\OSALFileWindows.cpp">
+      <Filter>OS\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ESCOsAbstraction\Windows\OSALCriticalSectionWindows.cpp">
+      <Filter>OS\Windows</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\ESC\ESC.h">
+      <Filter>ESC</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ESC\EscData.h">
+      <Filter>ESC</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ESC\EscEEPROM.h">
+      <Filter>ESC</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ESC\escFMMU.h">
+      <Filter>ESC</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ESC\EscMemory.h">
+      <Filter>ESC</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ESC\EscRegisterType.h">
+      <Filter>ESC</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ESC\EscSM.h">
+      <Filter>ESC</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ESC\EscTypes.h">
+      <Filter>ESC</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ESC\EthercatFrame.h">
+      <Filter>ESC</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ESC\EthercatPDU.h">
+      <Filter>ESC</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ESC\EthercatPDUData.h">
+      <Filter>ESC</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ESCOsAbstraction\OSAL.h">
+      <Filter>OS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ESCOsAbstraction\OSALAdapter.h">
+      <Filter>OS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ESCOsAbstraction\OSALAdapterBase.h">
+      <Filter>OS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ESCOsAbstraction\OSALCriticalSection.h">
+      <Filter>OS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ESCOsAbstraction\OSALCriticalSectionBase.h">
+      <Filter>OS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ESCOsAbstraction\OsalFile.h">
+      <Filter>OS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ESCOsAbstraction\OSALFileBase.h">
+      <Filter>OS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ESCOsAbstraction\OSALThread.h">
+      <Filter>OS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ESCOsAbstraction\OSALThreadBase.h">
+      <Filter>OS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ESC\EscManager.h">
+      <Filter>ESC</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ESCOsAbstraction\Windows\OSALAdapterWindows.h">
+      <Filter>OS\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ESCOsAbstraction\Windows\OSALThreadWindows.h">
+      <Filter>OS\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ESCOsAbstraction\Windows\OSALFileWindows.h">
+      <Filter>OS\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ESCOsAbstraction\Windows\OSALCriticalSectionWindows.h">
+      <Filter>OS\Windows</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ESC">
+      <UniqueIdentifier>{4c2ad862-e726-45f8-a264-c21d25bedac1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OS">
+      <UniqueIdentifier>{c98ceda9-11ce-4ed3-baf3-bb06b34117e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OS\Linux">
+      <UniqueIdentifier>{549c7f83-3cbc-45f7-ac55-667ce94d7473}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\ESC\ESC.cpp">
+      <Filter>ESC</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ESC\EscData.cpp">
+      <Filter>ESC</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ESC\EscEEPROM.cpp">
+      <Filter>ESC</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ESC\escFMMU.cpp">
+      <Filter>ESC</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ESC\EscMain.cpp">
+      <Filter>ESC</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ESC\EscManager.cpp">
+      <Filter>ESC</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ESC\EscMemory.cpp">
+      <Filter>ESC</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ESC\EscSM.cpp">
+      <Filter>ESC</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ESC\EthercatFrame.cpp">
+      <Filter>ESC</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ESC\EthercatPDU.cpp">
+      <Filter>ESC</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ESC\EthercatPDUData.cpp">
+      <Filter>ESC</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ESCOsAbstraction\Linux\OSALAdapterLinux.cpp">
+      <Filter>OS\Linux</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ESCOsAbstraction\Linux\OSALCriticalSectionLinux.cpp">
+      <Filter>OS\Linux</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ESCOsAbstraction\Linux\OSALFileLinux.cpp">
+      <Filter>OS\Linux</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ESCOsAbstraction\Linux\OSALThreadLinux.cpp">
+      <Filter>OS\Linux</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ESCOsAbstraction\OSAL.cpp">
+      <Filter>OS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ESCOsAbstraction\OSALAdapterBase.cpp">
+      <Filter>OS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ESCOsAbstraction\OSALCriticalSectionBase.cpp">
+      <Filter>OS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ESCOsAbstraction\OSALFileBase.cpp">
+      <Filter>OS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ESCOsAbstraction\OSALThread.cpp">
+      <Filter>OS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ESCOsAbstraction\OSALThreadBase.cpp">
+      <Filter>OS</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\ESC\ESC.h">
+      <Filter>ESC</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ESC\EscData.h">
+      <Filter>ESC</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ESC\EscEEPROM.h">
+      <Filter>ESC</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ESC\escFMMU.h">
+      <Filter>ESC</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ESC\EscManager.h">
+      <Filter>ESC</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ESC\EscMemory.h">
+      <Filter>ESC</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ESC\EscRegisterType.h">
+      <Filter>ESC</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ESC\EscSM.h">
+      <Filter>ESC</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ESC\EscTypes.h">
+      <Filter>ESC</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ESC\EthercatFrame.h">
+      <Filter>ESC</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ESC\EthercatPDU.h">
+      <Filter>ESC</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ESC\EthercatPDUData.h">
+      <Filter>ESC</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ESCOsAbstraction\Linux\OSALAdapterLinux.h">
+      <Filter>OS\Linux</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ESCOsAbstraction\Linux\OSALCriticalSectionLinux.h">
+      <Filter>OS\Linux</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ESCOsAbstraction\Linux\OSALFileLinux.h">
+      <Filter>OS\Linux</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ESCOsAbstraction\Linux\OSALThreadLinux.h">
+      <Filter>OS\Linux</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ESCOsAbstraction\OSAL.h">
+      <Filter>OS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ESCOsAbstraction\OSALAdapter.h">
+      <Filter>OS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ESCOsAbstraction\OSALAdapterBase.h">
+      <Filter>OS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ESCOsAbstraction\OSALCriticalSection.h">
+      <Filter>OS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ESCOsAbstraction\OSALCriticalSectionBase.h">
+      <Filter>OS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ESCOsAbstraction\OsalFile.h">
+      <Filter>OS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ESCOsAbstraction\OSALFileBase.h">
+      <Filter>OS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ESCOsAbstraction\OSALThread.h">
+      <Filter>OS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ESCOsAbstraction\OSALThreadBase.h">
+      <Filter>OS</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
