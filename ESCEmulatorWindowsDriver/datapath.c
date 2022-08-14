@@ -418,7 +418,7 @@ Return Value:
             //
             Tcb->FrameType = FRAME_TYPE_FROM_SEND_NB(NetBuffer);
 
-            HWProgramDmaForSend(Adapter, Tcb, NetBuffer, fAtDispatch);
+            HWProgramDmaForSend(Adapter, Tcb, NetBuffer, fAtDispatch); //hier rein
 
             NdisInterlockedInsertTailList(
                 &Adapter->BusyTcbList,
@@ -975,7 +975,7 @@ Return Value:
 --*/
 {
     MP_LOCK_STATE  LockState;
-    PLIST_ENTRY AdapterLink;
+   // PLIST_ENTRY AdapterLink;
 
 
     DEBUGP(MP_TRACE, "[%p] ---> RXDeliverFrameToEveryAdapter. Frame=0x%p\n", SendAdapter, Frame);
@@ -990,7 +990,7 @@ Return Value:
     // you have completed send.
     //
 
-    for (
+  /*  for (
         AdapterLink = GlobalData.AdapterList.Flink;
         AdapterLink != &GlobalData.AdapterList;
         AdapterLink = AdapterLink->Flink
@@ -1000,13 +1000,14 @@ Return Value:
 
         if (DestAdapter == SendAdapter)
         {
-            // Don't loopback packets to the sending adapter.
+            RXQueueFrameOnAdapter(DestAdapter, Nbl1QInfo, Frame);
             continue;
         }
 
-        RXQueueFrameOnAdapter(DestAdapter, Nbl1QInfo, Frame);
-    }
-
+       
+    }*/
+    DEBUGP(MP_TRACE, "[%p] <-- RXDeliverFrameToEveryAdapter Juchhhe\n", SendAdapter);
+    RXQueueFrameOnAdapter(SendAdapter, Nbl1QInfo, Frame);
     UNLOCK_ADAPTER_LIST(&LockState);
 
     DEBUGP(MP_TRACE, "[%p] <-- RXDeliverFrameToEveryAdapter\n", SendAdapter);

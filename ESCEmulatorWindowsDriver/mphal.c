@@ -869,9 +869,7 @@ Return Value:
         } 
 
         RXDeliverFrameToEveryAdapter(Adapter, &Nbl1QInfo, Frame, fAtDispatch); //Todo
-        //process esc
-        //call RXReceiveIndicateDpc
-
+      
         Tcb->BytesActuallySent = Frame->ulSize;
 
     } while(FALSE);

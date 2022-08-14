@@ -1642,7 +1642,7 @@ Arguments:
         // Initialize DPC data (entry, DPC function, target processor)
         //
         NdisInitializeListHead(&ReceiveDpc->Entry);
-        KeInitializeDpc(&ReceiveDpc->Dpc, RXReceiveIndicateDpc, Adapter);//to do delete this and his friends
+        KeInitializeDpc(&ReceiveDpc->Dpc, RXReceiveIndicateDpc, Adapter);
 
         //
         // Allocate the work item that's used if we're close to the DPC watchdog timer limit

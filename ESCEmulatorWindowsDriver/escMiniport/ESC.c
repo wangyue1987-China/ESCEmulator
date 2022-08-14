@@ -2,4 +2,6 @@
 
 void ProcessFrame(PVOID frame, UINT32 lenght)
 {
+	frame = frame;
+	lenght = lenght;
 }
