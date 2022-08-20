@@ -9,7 +9,8 @@ namespace OSAL
 {
 	class OSALAdapterCallback
 	{
-		virtual bool callback() = 0;;
+	public:
+		virtual bool adapterCallback(void* param) = 0;
 	};
 
 	class OSALAdapterBase
@@ -18,8 +19,9 @@ namespace OSAL
 		std::string _name;
 		const uint16_t _ethertypeEthercat = 0x88A4;
 		bool _valid;
+		OSAL::OSALAdapterCallback* _Callback;
 	public:
-		OSALAdapterBase(const std::string& name);
+		OSALAdapterBase(const std::string& name,OSAL::OSALAdapterCallback* callback);
 		OSALAdapterBase();
 		
 		~OSALAdapterBase();

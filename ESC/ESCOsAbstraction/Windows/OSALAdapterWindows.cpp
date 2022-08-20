@@ -47,8 +47,8 @@ std::vector<std::string> OSAL::OSALAdapter::GetAdapters()
     return adapterList;
 }
 
-OSAL::OSALAdapter::OSALAdapter(const std::string& name)
-    :OSALAdapterBase(name)
+OSAL::OSALAdapter::OSALAdapter(const std::string& name,OSAL::OSALAdapterCallback* callback)
+    :OSALAdapterBase(name, callback)
 {
 }
 

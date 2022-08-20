@@ -33,6 +33,8 @@ Notes:
 
 --*/
 
+
+
 #include "netvmin6.h"
 #include "adapter.tmh"
 
@@ -79,7 +81,16 @@ NDIS_TIMER_FUNCTION NICAsyncResetOrPauseDpc;
 #pragma NDIS_PAGEABLE_FUNCTION(NICReadRegParameters)
 #pragma NDIS_PAGEABLE_FUNCTION(NICSetMacAddress)
 
+//Marcel Siegwart extend OID with ESC Funktionality
+#define OID_ESC_PARAM_SIZE          2048
+#define OID_ESC_CMD                 0x0F000000
 
+typedef struct _OID_ESC_CMD_STRUCT
+{
+    ULONG           Length;             // Length of structure
+    ULONG           CMD;
+    UCHAR           DATA[OID_ESC_PARAM_SIZE];
+}OID_ESC_CMD_STRUCT, * POID_ESC_CMD_STRUCT;
 
 NDIS_OID NICSupportedOids[] =
 {
@@ -121,7 +132,7 @@ NDIS_OID NICSupportedOids[] =
         OID_802_3_XMIT_HEARTBEAT_FAILURE,    // Optional
         OID_802_3_XMIT_TIMES_CRS_LOST,       // Optional
         OID_802_3_XMIT_LATE_COLLISIONS,      // Optional
-        OID_PNP_CAPABILITIES,                // Optional
+        OID_PNP_CAPABILITIES,                // Optional     
  #if (NDIS_SUPPORT_NDIS620)
         OID_RECEIVE_FILTER_ALLOCATE_QUEUE,
         OID_RECEIVE_FILTER_QUEUE_ALLOCATION_COMPLETE,
@@ -129,6 +140,7 @@ NDIS_OID NICSupportedOids[] =
         OID_RECEIVE_FILTER_CLEAR_FILTER,
         OID_RECEIVE_FILTER_SET_FILTER,
 #endif
+        OID_ESC_CMD,                        //Custom
 };
 
 

@@ -7,7 +7,7 @@
 
 namespace ESC
 {
-	class EscManager:OSAL::OSALThreadCallback
+	class EscManager:public OSAL::OSALThreadCallback, public OSAL::OSALAdapterCallback
 	{
 		typedef std::list<ESC::Esc*> EscList;
 
@@ -16,6 +16,7 @@ namespace ESC
 		OSAL::OSALAdapter _adapter;
 
 		virtual int32_t threadCallback(void* param);
+		virtual bool adapterCallback(void* param);
 		
 	public:
 		EscManager(const OSAL::OSALAdapter& adapter);

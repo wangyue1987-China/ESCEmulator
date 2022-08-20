@@ -5,7 +5,7 @@ namespace OSAL
 	class OSALAdapter :public OSALAdapterBase
 	{
 	public:
-		OSALAdapter(const std::string& name);
+		OSALAdapter(const std::string& name, OSAL::OSALAdapterCallback* callback);
 		OSALAdapter();
 		
 

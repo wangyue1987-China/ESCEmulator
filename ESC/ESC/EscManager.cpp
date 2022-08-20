@@ -79,3 +79,8 @@ int32_t ESC::EscManager::threadCallback(void* param)
 	
 	return int32_t();
 }
+
+bool ESC::EscManager::adapterCallback(void* param)
+{
+	return false;
+}

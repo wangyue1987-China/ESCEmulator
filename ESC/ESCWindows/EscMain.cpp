@@ -9,7 +9,7 @@ int main()
 	//ESC::Esc esc2("Slave2");
 	//ESC::Esc esc3("Slave3");
 
-	OSAL::OSALAdapter adapter("eth0");
+	OSAL::OSALAdapter adapter("eth0",nullptr);
 	adapter.AdapterOpen();
 	ESC::EscManager escManager(adapter);
 	escManager.addEsc(&esc1);
