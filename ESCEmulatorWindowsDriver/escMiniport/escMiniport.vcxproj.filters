@@ -7,9 +7,36 @@
     <ClCompile Include="..\miniport.c; ..\adapter.c; ..\ctrlpath.c; ..\datapath.c; ..\tcbrcb.c; ..\mphal.c" />
     <ClCompile Include="..\miniport.c; ..\adapter.c; ..\ctrlpath.c; ..\datapath.c; ..\tcbrcb.c; ..\mphal.c" />
     <ClCompile Include="..\miniport.c; ..\adapter.c; ..\ctrlpath.c; ..\datapath.c; ..\tcbrcb.c; ..\mphal.c" />
-    <ClCompile Include="ESC.c">
+    <ClCompile Include="..\miniport.c; ..\adapter.c; ..\ctrlpath.c; ..\datapath.c; ..\tcbrcb.c; ..\mphal.c" />
+    <ClCompile Include="..\miniport.c; ..\adapter.c; ..\ctrlpath.c; ..\datapath.c; ..\tcbrcb.c; ..\mphal.c" />
+    <ClCompile Include="..\miniport.c; ..\adapter.c; ..\ctrlpath.c; ..\datapath.c; ..\tcbrcb.c; ..\mphal.c" />
+    <ClCompile Include="..\miniport.c; ..\adapter.c; ..\ctrlpath.c; ..\datapath.c; ..\tcbrcb.c; ..\mphal.c" />
+    <ClCompile Include="..\miniport.c; ..\adapter.c; ..\ctrlpath.c; ..\datapath.c; ..\tcbrcb.c; ..\mphal.c" />
+    <ClCompile Include="..\miniport.c; ..\adapter.c; ..\ctrlpath.c; ..\datapath.c; ..\tcbrcb.c; ..\mphal.c" />
+    <ClCompile Include="..\miniport.c; ..\adapter.c; ..\ctrlpath.c; ..\datapath.c; ..\tcbrcb.c; ..\mphal.c" />
+    <ClCompile Include="..\miniport.c; ..\adapter.c; ..\ctrlpath.c; ..\datapath.c; ..\tcbrcb.c; ..\mphal.c" />
+    <ClCompile Include="..\miniport.c; ..\adapter.c; ..\ctrlpath.c; ..\datapath.c; ..\tcbrcb.c; ..\mphal.c" />
+    <ClCompile Include="..\miniport.c; ..\adapter.c; ..\ctrlpath.c; ..\datapath.c; ..\tcbrcb.c; ..\mphal.c" />
+    <ClCompile Include="..\miniport.c; ..\adapter.c; ..\ctrlpath.c; ..\datapath.c; ..\tcbrcb.c; ..\mphal.c" />
+    <ClCompile Include="..\miniport.c; ..\adapter.c; ..\ctrlpath.c; ..\datapath.c; ..\tcbrcb.c; ..\mphal.c" />
+    <ClCompile Include="..\miniport.c; ..\adapter.c; ..\ctrlpath.c; ..\datapath.c; ..\tcbrcb.c; ..\mphal.c" />
+    <ClCompile Include="..\miniport.c; ..\adapter.c; ..\ctrlpath.c; ..\datapath.c; ..\tcbrcb.c; ..\mphal.c" />
+    <ClCompile Include="..\miniport.c; ..\adapter.c; ..\ctrlpath.c; ..\datapath.c; ..\tcbrcb.c; ..\mphal.c" />
+    <ClCompile Include="..\ESC\ESC.c">
       <Filter>ESC</Filter>
     </ClCompile>
+    <ClCompile Include="..\ESC\EthercatFrame.c">
+      <Filter>ESC</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ESC\EthercatPDU.c">
+      <Filter>ESC</Filter>
+    </ClCompile>
+    <ClCompile Include="..\miniport.c; ..\adapter.c; ..\ctrlpath.c; ..\datapath.c; ..\tcbrcb.c; ..\mphal.c" />
+    <ClCompile Include="..\miniport.c; ..\adapter.c; ..\ctrlpath.c; ..\datapath.c; ..\tcbrcb.c; ..\mphal.c" />
+    <ClCompile Include="..\miniport.c; ..\adapter.c; ..\ctrlpath.c; ..\datapath.c; ..\tcbrcb.c; ..\mphal.c" />
+    <ClCompile Include="..\miniport.c; ..\adapter.c; ..\ctrlpath.c; ..\datapath.c; ..\tcbrcb.c; ..\mphal.c" />
+    <ClCompile Include="..\miniport.c; ..\adapter.c; ..\ctrlpath.c; ..\datapath.c; ..\tcbrcb.c; ..\mphal.c" />
+    <ClCompile Include="Commands.c" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="escMiniport.rc" />
@@ -23,8 +50,16 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ESC.h">
+    <ClInclude Include="..\EscMiniPort.h" />
+    <ClInclude Include="..\ESC\ESC.h">
       <Filter>ESC</Filter>
     </ClInclude>
+    <ClInclude Include="..\ESC\EthercatFrame.h">
+      <Filter>ESC</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ESC\EthercatPDU.h">
+      <Filter>ESC</Filter>
+    </ClInclude>
+    <ClInclude Include="Commands.h" />
   </ItemGroup>
 </Project>

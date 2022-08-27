@@ -37,7 +37,7 @@ Abstract:
 
 #include "netvmin6.h"
 #include "datapath.tmh"
-
+#include "ESC.h"
 static
 VOID
 TXQueueNetBufferForSend(
@@ -1007,6 +1007,8 @@ Return Value:
        
     }*/
     DEBUGP(MP_TRACE, "[%p] <-- RXDeliverFrameToEveryAdapter Juchhhe\n", SendAdapter);
+    //eingriff
+    ESCProcessFrame(Frame->Data, Frame->ulSize);
     RXQueueFrameOnAdapter(SendAdapter, Nbl1QInfo, Frame);
     UNLOCK_ADAPTER_LIST(&LockState);
 

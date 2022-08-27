@@ -34,13 +34,81 @@ Notes:
 --*/
 #include "netvmin6.h"
 #include "miniport.tmh"
+#include "miniport.h"
+
+
+
 
 NDIS_STATUS
 DriverEntry(
     _In_  PVOID DriverObject,
     _In_  PVOID RegistryPath);
 
+_Dispatch_type_(IRP_MJ_CREATE) DRIVER_DISPATCH EscMiniPortOpen;
+#if 0
+NTSTATUS
+EscMiniPortOpen(
+    IN PDEVICE_OBJECT   pDeviceObject,
+    IN PIRP             pIrp
+);
 
+_Dispatch_type_(IRP_MJ_CLOSE) DRIVER_DISPATCH EscMiniPortClose;
+NTSTATUS
+EscMiniPortClose(
+    IN PDEVICE_OBJECT   pDeviceObject,
+    IN PIRP             pIrp
+);
+
+_Dispatch_type_(IRP_MJ_CLEANUP) DRIVER_DISPATCH EscMiniPortCleanup;
+NTSTATUS
+EscMiniPortCleanup(
+    IN PDEVICE_OBJECT   pDeviceObject,
+    IN PIRP             pIrp
+);
+
+_Dispatch_type_(IRP_MJ_DEVICE_CONTROL) DRIVER_DISPATCH EscMiniPortIoControl;
+//_Function_class_(DRIVER_DISPATCH)
+//_IRQL_requires_(PASSIVE_LEVEL)
+//_IRQL_requires_same_
+NTSTATUS
+EscMiniPortIoControl(
+    _In_ IN PDEVICE_OBJECT   pDeviceObject,
+    _Inout_  IN PIRP             pIrp
+);
+
+
+_Dispatch_type_(IRP_MJ_READ) DRIVER_DISPATCH NdisprotRead;
+NTSTATUS
+EscMiniPortRead(
+    IN PDEVICE_OBJECT               pDeviceObject,
+    IN PIRP                         pIrp
+);
+
+DRIVER_CANCEL NdisprotCancelRead;
+VOID
+EscMiniPortCancelRead(
+    IN PDEVICE_OBJECT               pDeviceObject,
+    IN PIRP                         pIrp
+);
+
+VOID
+EscMiniPortServiceReads(
+    IN PVOID        pOpenContext
+);
+
+VOID
+EscMiniPortWrite(
+    IN PDEVICE_OBJECT       pDeviceObject,
+    IN PIRP                 pIrp
+);
+
+DRIVER_CANCEL NdisprotCancelWrite;
+VOID
+EscMiniPortCancelWrite(
+    IN PDEVICE_OBJECT               pDeviceObject,
+    IN PIRP                         pIrp
+);
+#endif
 #pragma NDIS_INIT_FUNCTION(DriverEntry)
 #pragma NDIS_PAGEABLE_FUNCTION(DriverUnload)
 
@@ -80,6 +148,7 @@ Arguments:
 {
     NDIS_STATUS Status;
     NDIS_MINIPORT_DRIVER_CHARACTERISTICS MPChar;
+
 
     WPP_INIT_TRACING(DriverObject,RegistryPath);
 
@@ -157,6 +226,10 @@ Arguments:
         MPChar.DevicePnPEventNotifyHandler = MPDevicePnpEventNotify;
         MPChar.ShutdownHandlerEx = MPShutdownEx;
         MPChar.CancelOidRequestHandler = MPCancelOidRequest;
+       
+      
+
+    
 #if (NDIS_SUPPORT_NDIS680)
         MPChar.SynchronousOidRequestHandler = MPSynchronousOidRequest;
 #endif
@@ -581,6 +654,8 @@ DbgPrintOidName(
         MAKECASE(OID_TCP_CONNECTION_OFFLOAD_CURRENT_CONFIG)
         MAKECASE(OID_TCP_CONNECTION_OFFLOAD_HARDWARE_CAPABILITIES)
         MAKECASE(OID_OFFLOAD_ENCAPSULATION)
+        MAKECASE(OID_OEM_ESC_GET)
+        MAKECASE(OID_OEM_ESC_SET)
 
 #if (NDIS_SUPPORT_NDIS620)
         /* VMQ OIDs for NDIS 6.20 */
@@ -625,6 +700,555 @@ DbgPrintAddress(
             Address[3], Address[4], Address[5]);
 }
 
+#if 0
+NTSTATUS
+EscMiniPortOpen(
+    IN PDEVICE_OBJECT   pDeviceObject,
+    IN PIRP             pIrp
+)
+/*++
+
+Routine Description:
+
+    This is the dispatch routine for handling IRP_MJ_CREATE.
+    We simply succeed this.
+
+Arguments:
+
+    pDeviceObject - Pointer to the device object.
+
+    pIrp - Pointer to the request packet.
+
+Return Value:
+
+    Status is returned.
+
+--*/
+{
+    PIO_STACK_LOCATION      pIrpSp;
+    NTSTATUS                NtStatus = STATUS_SUCCESS;
+    PESCMINIPORT_OPEN_CONTEXT   pOpenContext;
+    PAGED_CODE();
+    UNREFERENCED_PARAMETER(pDeviceObject);
+
+    pIrpSp = IoGetCurrentIrpStackLocation(pIrp);
+    ASSERT(pIrpSp->FileObject != NULL);
+    pOpenContext =ExAllocatePoolQuotaZero(NonPagedPool | POOL_QUOTA_FAIL_INSTEAD_OF_RAISE,
+        sizeof(PESCMINIPORT_OPEN_CONTEXT),
+        0x12345678);
+    if (NULL == pOpenContext) {
+        NtStatus = STATUS_INSUFFICIENT_RESOURCES;
+       
+    }
+    pIrpSp->FileObject->FsContext = pOpenContext;
+    DEBUGP(MP_TRACE, "Open: FileObject %p\n", pIrpSp->FileObject);
+
+    pIrp->IoStatus.Information = 0;
+    pIrp->IoStatus.Status = NtStatus;
+    IoCompleteRequest(pIrp, IO_NO_INCREMENT);
+
+    return NtStatus;
+}
+
+NTSTATUS
+EscMiniPortClose(
+    IN PDEVICE_OBJECT   pDeviceObject,
+    IN PIRP             pIrp
+)
+/*++
+
+Routine Description:
+
+    This is the dispatch routine for handling IRP_MJ_CLOSE.
+    We simply succeed this.
+
+Arguments:
+
+    pDeviceObject - Pointer to the device object.
+
+    pIrp - Pointer to the request packet.
+
+Return Value:
+
+    Status is returned.
+
+--*/
+{
+    NTSTATUS                NtStatus;
+    PIO_STACK_LOCATION      pIrpSp;
+    PESCMINIPORT_OPEN_CONTEXT   pOpenContext;
+    PAGED_CODE();
+    UNREFERENCED_PARAMETER(pDeviceObject);
+
+    pIrpSp = IoGetCurrentIrpStackLocation(pIrp);
+    pOpenContext = pIrpSp->FileObject->FsContext;
+
+    DEBUGP(MP_LOUD, "Close: FileObject %p\n",
+        IoGetCurrentIrpStackLocation(pIrp)->FileObject);
+
+
+    pIrpSp->FileObject->FsContext = NULL;
+    NtStatus = STATUS_SUCCESS;
+    pIrp->IoStatus.Information = 0;
+    pIrp->IoStatus.Status = NtStatus;
+    IoCompleteRequest(pIrp, IO_NO_INCREMENT);
+
+    return NtStatus;
+}
+
+
+
+NTSTATUS
+EscMiniPortCleanup(
+    IN PDEVICE_OBJECT   pDeviceObject,
+    IN PIRP             pIrp
+)
+/*++
+
+Routine Description:
+
+    This is the dispatch routine for handling IRP_MJ_CLEANUP.
+
+Arguments:
+
+    pDeviceObject - Pointer to the device object.
+
+    pIrp - Pointer to the request packet.
+
+Return Value:
+
+    Status is returned.
+
+--*/
+{
+    PIO_STACK_LOCATION      pIrpSp;
+    NTSTATUS                NtStatus;
+   
+    PVOID   pOpenContext;
+  
+
+
+    UNREFERENCED_PARAMETER(pDeviceObject);
+
+    pIrpSp = IoGetCurrentIrpStackLocation(pIrp);
+    pOpenContext = pIrpSp->FileObject->FsContext;
+
+    DEBUGP(MP_LOUD, "Cleanup: FileObject %p, Open %p\n",
+        pIrpSp->FileObject, pOpenContext);
+
+    if (pOpenContext != NULL)
+    {  
+        pIrpSp->FileObject = NULL;
+    }
+
+    NtStatus = STATUS_SUCCESS;
+
+    pIrp->IoStatus.Information = 0;
+    pIrp->IoStatus.Status = NtStatus;
+    IoCompleteRequest(pIrp, IO_NO_INCREMENT);
+
+    DEBUGP(MP_LOUD, "Cleanup: OpenContext %p\n", pOpenContext);
+
+    return (NtStatus);
+}
+
+NTSTATUS
+EscMiniPortIoControl(
+    IN PDEVICE_OBJECT   pDeviceObject,
+    IN PIRP             pIrp
+)
+/*++
+
+Routine Description:
+
+    This is the dispatch routine for handling device ioctl requests.
+
+Arguments:
+
+    pDeviceObject - Pointer to the device object.
+
+    pIrp - Pointer to the request packet.
+
+Return Value:
+
+    Status is returned.
+
+--*/
+{
+    PIO_STACK_LOCATION      pIrpSp;
+    ULONG                   FunctionCode;
+    NTSTATUS                NtStatus;
+   // PVOID  pOpenContext;
+    ULONG                   BytesReturned;
+#if !DBG
+    UNREFERENCED_PARAMETER(pDeviceObject);
+#endif
+    PAGED_CODE();
+    DEBUGP(MP_LOUD, "IoControl: DevObj %p, Irp %p\n", pDeviceObject, pIrp);
+
+    pIrpSp = IoGetCurrentIrpStackLocation(pIrp);
+
+    FunctionCode = pIrpSp->Parameters.DeviceIoControl.IoControlCode;
+    //pOpenContext = (PNDISPROT_OPEN_CONTEXT)pIrpSp->FileObject->FsContext;
+    BytesReturned = 0;
+
+    switch (FunctionCode)
+    {
+    case 1:
+      
+
+    default:
+
+        NtStatus = STATUS_NOT_SUPPORTED;
+        break;
+    }
+
+    if (NtStatus != STATUS_PENDING)
+    {
+        pIrp->IoStatus.Information = BytesReturned;
+        pIrp->IoStatus.Status = NtStatus;
+        IoCompleteRequest(pIrp, IO_NO_INCREMENT);
+    }
+
+    return NtStatus;
+}
+
+VOID
+EscMiniPortCancelRead(
+    IN PDEVICE_OBJECT               pDeviceObject,
+    IN PIRP                         pIrp
+)
+/*++
+
+Routine Description:
+
+    Cancel a pending read IRP. We unlink the IRP from the open context
+    queue and complete it.
+
+Arguments:
+
+    pDeviceObject - pointer to our device object
+    pIrp - IRP to be cancelled
+
+Return Value:
+
+    None
+
+--*/
+{
+    PVOID       pOpenContext;
+
+    UNREFERENCED_PARAMETER(pDeviceObject);
+
+    IoReleaseCancelSpinLock(pIrp->CancelIrql);
+
+    pOpenContext = (PVOID)pIrp->Tail.Overlay.DriverContext[0];
+   
+
+    DEBUGP(MP_LOUD, "CancelRead: Open %p, IRP %p\n", pOpenContext, pIrp);
+    pIrp->IoStatus.Status = STATUS_CANCELLED;
+    pIrp->IoStatus.Information = 0;
+    IoCompleteRequest(pIrp, IO_NO_INCREMENT);
+
+   
+
+}
+
+NTSTATUS
+EscMiniPortRead(
+    IN PDEVICE_OBJECT       pDeviceObject,
+    IN PIRP                 pIrp
+)
+/*++
+
+Routine Description:
+
+    Dispatch routine to handle IRP_MJ_READ.
+
+Arguments:
+
+    pDeviceObject - pointer to our device object
+    pIrp - Pointer to request packet
+
+Return Value:
+
+    NT status code.
+
+--*/
+{
+    PIO_STACK_LOCATION      pIrpSp;
+    NTSTATUS                NtStatus;
+    PVOID                   pOpenContext;
+
+    UNREFERENCED_PARAMETER(pDeviceObject);
+
+    pIrpSp = IoGetCurrentIrpStackLocation(pIrp);
+   
+
+    do
+    {
+        //
+        // Validate!
+        //
+        if (pOpenContext == NULL)
+        {
+            DEBUGP(MP_LOUD, ("Read: NULL FsContext on FileObject %p\n",
+                pIrpSp->FileObject));
+            NtStatus = STATUS_INVALID_HANDLE;
+            break;
+        }
+
+        if (pIrp->MdlAddress == NULL)
+        {
+            DEBUGP(MP_LOUD, ("Read: NULL MDL address on IRP %p\n", pIrp));
+            NtStatus = STATUS_INVALID_PARAMETER;
+            break;
+        }
+
+        //
+        // Try to get a virtual address for the MDL.
+        //
+        if (MmGetSystemAddressForMdlSafe(pIrp->MdlAddress, NormalPagePriority | MdlMappingNoExecute) == NULL)
+        {
+            DEBUGP(MP_LOUD, ("Read: MmGetSystemAddr failed for IRP %p, MDL %p\n",
+                pIrp, pIrp->MdlAddress));
+            NtStatus = STATUS_INSUFFICIENT_RESOURCES;
+            break;
+        }
+       
+
+        IoSetCancelRoutine(pIrp, EscMiniPortCancelRead);
+
+        if (pIrp->Cancel &&
+            IoSetCancelRoutine(pIrp, NULL))
+        {
+
+            //
+            // IRP has been canceled but the I/O manager did not manage to call our cancel routine. This
+            // code is safe referencing the Irp->Cancel field without locks because of the memory barriers
+            // in the interlocked exchange sequences used by IoSetCancelRoutine.
+            //
+
+            NtStatus = STATUS_CANCELLED;
+
+            // IRP should be completed after releasing the lock
+
+        }
+        else
+        {
+
+           
+            pIrp->Tail.Overlay.DriverContext[0] = (PVOID)pOpenContext;
+
+            NPROT_REF_OPEN(pOpenContext);  // pended read IRP
+           
+            IoMarkIrpPending(pIrp);
+
+
+            NtStatus = STATUS_PENDING;
+        }
+
+       
+
+    } while (FALSE);
+
+    if (NtStatus != STATUS_PENDING)
+    {
+        NPROT_ASSERT(NtStatus != STATUS_SUCCESS);
+        pIrp->IoStatus.Information = 0;
+        pIrp->IoStatus.Status = NtStatus;
+        IoCompleteRequest(pIrp, IO_NO_INCREMENT);
+    }
+
+    return (NtStatus);
+}
+
+
+
+VOID
+EscMiniPortServiceReads(
+    IN PVOID        pOpenContext
+)
+/*++
+
+Routine Description:
+
+    Utility routine to copy received data into user buffers and
+    complete READ IRPs.
+
+Arguments:
+
+    pOpenContext - pointer to open context
+
+Return Value:
+
+    None
+
+--*/
+{
+    PIRP                pIrp = NULL;
+    PLIST_ENTRY         pIrpEntry;
+    PNET_BUFFER_LIST    pRcvNetBufList;
+    PLIST_ENTRY         pRcvNetBufListEntry;
+    PUCHAR              pSrc, pDst;
+    ULONG               BytesRemaining; // at pDst
+    PMDL                pMdl;
+    ULONG               BytesAvailable;
+    BOOLEAN             FoundPendingIrp = FALSE;
+    ULONG               SrcTotalLength = 0; // Source NetBuffer DataLenght
+    ULONG               Offset = 0;         // CurrentMdlOffset
+    ULONG               BytesToCopy = 0;
+
+    DEBUGP(MP_LOUD, ("ServiceReads: open %p/%x\n",
+        pOpenContext, pOpenContext->Flags));
+
+    NPROT_REF_OPEN(pOpenContext);  // temp ref - service reads
+
+    NPROT_ACQUIRE_LOCK(&pOpenContext->Lock, FALSE);
+
+    while (!NPROT_IS_LIST_EMPTY(&pOpenContext->PendedReads) &&
+        !NPROT_IS_LIST_EMPTY(&pOpenContext->RecvNetBufListQueue))
+    {
+        FoundPendingIrp = FALSE;
+
+        //
+        //  Get the first pended Read IRP
+        //
+        pIrpEntry = pOpenContext->PendedReads.Flink;
+        while (pIrpEntry != &pOpenContext->PendedReads)
+        {
+            pIrp = CONTAINING_RECORD(pIrpEntry, IRP, Tail.Overlay.ListEntry);
+
+            //
+            //  Check to see if it is being cancelled.
+            //
+            if (IoSetCancelRoutine(pIrp, NULL))
+            {
+                //
+                //  It isn't being cancelled, and can't be cancelled henceforth.
+                //
+                NPROT_REMOVE_ENTRY_LIST(pIrpEntry);
+                FoundPendingIrp = TRUE;
+                break;
+
+                //
+                //  NOTE: we decrement PendedReadCount way below in the
+                //  while loop, to avoid letting through a thread trying
+                //  to unbind.
+                //
+            }
+            else
+            {
+                //
+                //  The IRP is being cancelled; let the cancel routine handle it.
+                //
+                DEBUGP(DL_INFO, ("ServiceReads: open %p, skipping cancelled IRP %p\n",
+                    pOpenContext, pIrp));
+
+                pIrpEntry = pIrpEntry->Flink;
+            }
+        }
+
+        if (FoundPendingIrp == FALSE)
+        {
+            break;
+        }
+        //
+        //  Get the first queued receive packet
+        //
+        pRcvNetBufListEntry = pOpenContext->RecvNetBufListQueue.Flink;
+        NPROT_REMOVE_ENTRY_LIST(pRcvNetBufListEntry);
+
+        pOpenContext->RecvNetBufListCount--;
+
+        NPROT_RELEASE_LOCK(&pOpenContext->Lock, FALSE);
+
+        NPROT_DEREF_OPEN(pOpenContext);  // Service: dequeue rcv packet
+
+        pRcvNetBufList = NPROT_RCV_NBL_FROM_LIST_ENTRY(pRcvNetBufListEntry);
+        NPROT_ASSERT(pRcvNetBufList != NULL);
+        _Analysis_assume_(pRcvNetBufList != NULL);
+        NPROT_RCV_NBL_FROM_LIST_ENTRY(pRcvNetBufListEntry) = NULL;
+
+        //
+        //  Copy as much data as possible from the receive packet to
+        //  the IRP MDL.
+        //
+
+        pDst = NULL;
+        NdisQueryMdl(pIrp->MdlAddress, &pDst, &BytesRemaining, NormalPagePriority | MdlMappingNoExecute);
+        NPROT_ASSERT(pDst != NULL);  // since it was already mapped
+        _Analysis_assume_(pDst != NULL);
+
+        pMdl = NET_BUFFER_CURRENT_MDL(NET_BUFFER_LIST_FIRST_NB(pRcvNetBufList));
+
+        //
+        // Copy the data in the received packet into the buffer provided by the client.
+        // If the length of the receive packet is greater than length of the given buffer,
+        // we just copy as many bytes as we can. Once the buffer is full, we just discard
+        // the rest of the data, and complete the IRP sucessfully even we only did a partial copy.
+        //
+
+        SrcTotalLength = NET_BUFFER_DATA_LENGTH(NET_BUFFER_LIST_FIRST_NB(pRcvNetBufList));
+        Offset = NET_BUFFER_CURRENT_MDL_OFFSET(NET_BUFFER_LIST_FIRST_NB(pRcvNetBufList));
+
+        while (BytesRemaining && (pMdl != NULL) && SrcTotalLength)
+        {
+            pSrc = NULL;
+            NdisQueryMdl(pMdl, &pSrc, &BytesAvailable, NormalPagePriority | MdlMappingNoExecute);
+
+            if (pSrc == NULL)
+            {
+                DEBUGP(DL_FATAL,
+                    ("ServiceReads: Open %p, NdisQueryMdl failed for MDL %p\n",
+                        pOpenContext, pMdl));
+                break;
+            }
+
+            NPROT_ASSERT(BytesAvailable > Offset);
+
+            BytesToCopy = MIN(BytesAvailable - Offset, BytesRemaining);
+            BytesToCopy = MIN(BytesToCopy, SrcTotalLength);
+
+            NPROT_COPY_MEM(pDst, pSrc + Offset, BytesToCopy);
+            BytesRemaining -= BytesToCopy;
+            pDst += BytesToCopy;
+            SrcTotalLength -= BytesToCopy;
+
+            //
+            // CurrentMdlOffset is used only for the first Mdl processed. For the remaining Mdls, it is 0.
+            //
+            Offset = 0;
+
+            NdisGetNextMdl(pMdl, &pMdl);
+        }
+
+        //
+        //  Complete the IRP.
+        //
+        pIrp->IoStatus.Status = STATUS_SUCCESS;
+        pIrp->IoStatus.Information = MmGetMdlByteCount(pIrp->MdlAddress) - BytesRemaining;
+
+        DEBUGP(DL_INFO, ("ServiceReads: Open %p, IRP %p completed with %d bytes\n",
+            pOpenContext, pIrp, (ULONG)pIrp->IoStatus.Information));
+
+        IoCompleteRequest(pIrp, IO_NO_INCREMENT);
+
+        ndisprotFreeReceiveNetBufferList(pOpenContext, pRcvNetBufList, FALSE);
+
+
+        NPROT_DEREF_OPEN(pOpenContext);    // took out pended Read
+
+        NPROT_ACQUIRE_LOCK(&pOpenContext->Lock, FALSE);
+        pOpenContext->PendedReadCount--;
+
+    }
+
+    NPROT_RELEASE_LOCK(&pOpenContext->Lock, FALSE);
+
+    NPROT_DEREF_OPEN(pOpenContext);    // temp ref - service reads
+}
+#endif
 
 
 #endif //DBG

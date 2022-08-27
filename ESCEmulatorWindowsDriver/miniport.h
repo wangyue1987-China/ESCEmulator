@@ -25,7 +25,7 @@ Abstract:
 #ifndef _MINIPORT_H
 #define _MINIPORT_H
 
-
+#include "EscMiniPort.h"
 
 //
 // Update the driver version number every time you release a new driver
@@ -229,6 +229,8 @@ extern MP_GLOBAL       GlobalData;
 
 // Miniport routines
 SET_OPTIONS  MPSetOptions;
+
+
 
 
 void

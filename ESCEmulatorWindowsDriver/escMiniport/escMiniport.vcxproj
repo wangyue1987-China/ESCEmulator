@@ -77,12 +77,15 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
   </ImportGroup>
   <ItemGroup Label="WrappedTaskItems">
+    <ClCompile Include="..\ESC\ESC.c" />
+    <ClCompile Include="..\ESC\EthercatFrame.c" />
+    <ClCompile Include="..\ESC\EthercatPDU.c" />
     <ClCompile Include="..\miniport.c; ..\adapter.c; ..\ctrlpath.c; ..\datapath.c; ..\tcbrcb.c; ..\mphal.c">
       <WppEnabled>true</WppEnabled>
       <WppKernelMode>true</WppKernelMode>
       <WppTraceFunction>DEBUGP(LEVEL,MSG,...)</WppTraceFunction>
     </ClCompile>
-    <ClCompile Include="ESC.c" />
+    <ClCompile Include="Commands.c" />
     <OtherWpp Include="escMiniport.rc">
       <WppEnabled>true</WppEnabled>
       <WppKernelMode>true</WppKernelMode>
@@ -139,6 +142,7 @@
       <DisableSpecificWarnings>%(DisableSpecificWarnings);4201;4214;4127</DisableSpecificWarnings>
       <ExceptionHandling>
       </ExceptionHandling>
+      <AdditionalIncludeDirectories>E:\__Git__\ESCEmulator\ESCEmulatorWindowsDriver\ESC;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Midl>
       <PreprocessorDefinitions>%(PreprocessorDefinitions);NDIS60_MINIPORT=1</PreprocessorDefinitions>
@@ -226,8 +230,11 @@
     <None Exclude="@(None)" Include="*.def;*.bat;*.hpj;*.asmx" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Exclude="@(ClInclude)" Include="*.h;*.hpp;*.hxx;*.hm;*.inl;*.xsd" />
-    <ClInclude Include="ESC.h" />
+    <ClInclude Include="..\EscMiniPort.h" />
+    <ClInclude Include="..\ESC\ESC.h" />
+    <ClInclude Include="..\ESC\EthercatFrame.h" />
+    <ClInclude Include="..\ESC\EthercatPDU.h" />
+    <ClInclude Include="Commands.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 </Project>

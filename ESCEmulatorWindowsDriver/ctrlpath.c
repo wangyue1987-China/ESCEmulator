@@ -21,7 +21,7 @@ Abstract:
 
 #include "netvmin6.h"
 #include "ctrlpath.tmh"
-
+#include "ESC.h"
 
 static
 NDIS_STATUS
@@ -654,10 +654,10 @@ Return Value:
 
                 /* Errors in */
                 Statistics->ifInErrors =
-                        Adapter->RxCrcErrors +
-                        Adapter->RxAlignmentErrors +
-                        Adapter->RxDmaOverrunErrors +
-                        Adapter->RxRuntErrors;
+                       (ULONG64)Adapter->RxCrcErrors +
+                    (ULONG64)Adapter->RxAlignmentErrors +
+                    (ULONG64)Adapter->RxDmaOverrunErrors +
+                    (ULONG64)Adapter->RxRuntErrors;
 
                 Statistics->ifInDiscards =
                         Adapter->RxResourceErrors;
@@ -665,9 +665,9 @@ Return Value:
 
                 /* Bytes out */
                 Statistics->ifHCOutOctets =
-                        Adapter->BytesTxDirected +
-                        Adapter->BytesTxMulticast +
-                        Adapter->BytesTxBroadcast;
+                    (ULONG64)Adapter->BytesTxDirected +
+                    (ULONG64)Adapter->BytesTxMulticast +
+                    (ULONG64)Adapter->BytesTxBroadcast;
 
                 Statistics->ifHCOutUcastOctets =
                         Adapter->BytesTxDirected;
@@ -690,11 +690,11 @@ Return Value:
 
                 /* Errors out */
                 Statistics->ifOutErrors =
-                        Adapter->TxAbortExcessCollisions +
-                        Adapter->TxDmaUnderrun +
-                        Adapter->TxLostCRS +
-                        Adapter->TxLateCollisions+
-                        Adapter->TransmitFailuresOther;
+                    (ULONG64)Adapter->TxAbortExcessCollisions +
+                    (ULONG64)Adapter->TxDmaUnderrun +
+                    (ULONG64)Adapter->TxLostCRS +
+                    (ULONG64)Adapter->TxLateCollisions+
+                    (ULONG64)Adapter->TransmitFailuresOther;
 
                 Statistics->ifOutDiscards =
                         0ULL;
@@ -785,6 +785,15 @@ Return Value:
         case OID_PNP_QUERY_POWER:
             // simply succeed this.
             break;
+        case OID_OEM_ESC_GET:
+        {
+            UCHAR t[6] = { 0x77, 0x77, 0x77, 0x77, 0x77 ,0x77 };
+           
+            // simply succeed this.
+            DEBUGP(MP_LOUD, "[%p] ---> Jawoll supi GET", Adapter);
+            pInfo = t;
+            break;
+        }
 
         default:
             Status = NDIS_STATUS_NOT_SUPPORTED;
@@ -963,6 +972,20 @@ Return Value:
         case OID_PNP_ENABLE_WAKE_UP:
 #endif
             ASSERT(!"NIC does not support wake on LAN OIDs"); 
+        case OID_OEM_ESC_SET:
+        {
+            
+            Set->BytesRead = Set->InformationBufferLength;
+            // simply succeed this.
+            DEBUGP(MP_LOUD, "[%p] ---> Jawoll supi SET %x %x %x %x %x", Adapter,
+                ((PUCHAR)Set->InformationBuffer)[0],
+                ((PUCHAR)Set->InformationBuffer)[1], 
+                ((PUCHAR)Set->InformationBuffer)[2],
+                ((PUCHAR)Set->InformationBuffer)[3],
+                ((PUCHAR)Set->InformationBuffer)[4]);
+        
+            break;
+        }
         default:
             Status = NDIS_STATUS_NOT_SUPPORTED;
             break;
